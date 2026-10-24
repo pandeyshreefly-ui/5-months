@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Pratik & Spriha — 5-Month Midnight Anniversary Gift by Shreejit</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B0E14',
+                        darkCard: '#161B26',
+                        neonRose: '#FF4D8D',
+                        glowViolet: '#8B5CF6',
+                        warmGold: '#FFD166',
+                        softPink: '#F472B6',
+                        glassBorder: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    fontFamily: {
+                        dancing: ['"Dancing Script"', 'cursive'],
+                        greatVibes: ['"Great Vibes"', 'cursive'],
+                        quicksand: ['"Quicksand"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Mobile Safe Area & Theme Reset */
+        :root {
+            --sat: env(safe-area-inset-top);
+            --sab: env(safe-area-inset-bottom);
+        }
+
+        body {
+            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #0B0E14;
+            color: #F3F4F6;
+            overflow-x: hidden;
+            padding-top: var(--sat);
+            padding-bottom: var(--sab);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Responsive Glassmorphism Cards */
+        .glass-card {
+            background: rgba(22, 27, 38, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-card-glow {
+            background: rgba(22, 27, 38, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 77, 141, 0.35);
+            box-shadow: 0 0 25px rgba(255, 77, 141, 0.2);
+        }
+
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0E14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF4D8D;
+        }
+
+        /* Touch-Optimized Flip Card Effect */
+        .flip-card {
+            perspective: 1000px;
+            touch-action: manipulation;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.25rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Equalizer Animation */
+        .eq-bar {
+            width: 3px;
+            background-color: #FF4D8D;
+            animation: bounce 1s infinite ease-in-out alternate;
+        }
+        .eq-bar:nth-child(1) { height: 12px; animation-delay: 0.1s; }
+        .eq-bar:nth-child(2) { height: 18px; animation-delay: 0.3s; }
+        .eq-bar:nth-child(3) { height: 8px;  animation-delay: 0.2s; }
+        .eq-bar:nth-child(4) { height: 15px; animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1.1); }
+        }
+
+        .paused .eq-bar {
+            animation-play-state: paused;
+            height: 4px !important;
+        }
+
+        /* Touch & Envelope Hover States */
+        .envelope-wrapper {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
+            touch-action: manipulation;
+        }
+        .envelope-wrapper:active {
+            transform: scale(0.97);
+        }
+
+        /* Modal Transitions */
+        .modal-active {
+            display: flex !important;
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Heart Beat Animation */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.15); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.15); }
+            70% { transform: scale(1); }
+        }
+        .heart-beat {
+            animation: heartbeat 2.5s infinite;
+        }
+
+        /* Fluid Responsive Titles */
+        .fluid-title {
+            font-size: clamp(2.75rem, 8vw, 5.5rem);
+        }
+        .fluid-subtitle {
+            font-size: clamp(1.25rem, 4vw, 2.25rem);
+        }
+
+        /* Couple story road map */
+        .story-road { position: relative; max-width: 820px; margin: 0 auto; padding: 1rem 0; }
+        .story-road::before { content: ""; position: absolute; top: 1.5rem; bottom: 1.5rem; left: 50%; width: 5px; transform: translateX(-50%); border-radius: 99px; background: repeating-linear-gradient(to bottom, rgba(255,77,141,.95) 0 18px, transparent 18px 30px); filter: drop-shadow(0 0 8px rgba(255,77,141,.35)); }
+        .story-stop { position: relative; display: flex; width: 100%; margin: 0 0 2.5rem; align-items: center; }
+        .story-stop:last-child { margin-bottom: 0; }
+        .story-stop:nth-child(odd) { justify-content: flex-start; padding-right: calc(50% + 2.1rem); }
+        .story-stop:nth-child(even) { justify-content: flex-end; padding-left: calc(50% + 2.1rem); }
+        .story-stop::after { content: "➜"; position: absolute; left: 50%; top: 1.25rem; transform: translateX(-50%) rotate(90deg); z-index: 2; display:flex; align-items:center; justify-content:center; width: 2.2rem; height: 2.2rem; border-radius: 50%; color: #fff; font-size: 1rem; background: linear-gradient(135deg,#FF4D8D,#8B5CF6); border: 3px solid #0B0E14; box-shadow: 0 0 18px rgba(255,77,141,.4); }
+        .story-card { width: 100%; overflow: hidden; border: 1px solid rgba(255,77,141,.28); border-radius: 1.25rem; background: rgba(22,27,38,.92); box-shadow: 0 10px 30px rgba(0,0,0,.28); }
+        .story-card img { display:block; width:100%; height:auto; max-height:none; object-fit:contain; object-position:center; background:#161B26; }
+        .story-caption { padding: .95rem 1rem 1.1rem; text-align:center; }
+        .story-number { display:inline-flex; align-items:center; justify-content:center; width:1.7rem; height:1.7rem; border-radius:50%; background:rgba(255,77,141,.14); color:#FF4D8D; font-weight:800; font-size:.75rem; margin-bottom:.35rem; }
+        @media (max-width: 640px) {
+          .story-road { padding-left: 1.5rem; }
+          .story-road::before { left: .55rem; transform:none; }
+          .story-stop, .story-stop:nth-child(odd), .story-stop:nth-child(even) { justify-content:flex-start; padding:0 0 0 1.2rem; margin-bottom:1.5rem; }
+          .story-stop::after { left:.55rem; width:1.8rem; height:1.8rem; font-size:.8rem; }
+        }
+
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-neonRose selection:text-white">
+
+    <!-- Canvas for High-DPI Floating Night Stars & Hearts -->
+    <canvas id="heartsCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- Floating Mobile-Friendly Audio Control Widget -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="musicToggleBtn" onclick="toggleMusic()" class="glass-pill px-3.5 py-2.5 rounded-full flex items-center space-x-2.5 shadow-xl hover:border-neonRose/50 transition-all duration-300 active:scale-95 min-h-[44px] min-w-[44px]">
+            <span class="text-[11px] font-semibold tracking-wider uppercase text-gray-200 hidden sm:inline">Midnight Lullaby</span>
+            <div id="eqIcon" class="flex items-end space-x-0.5 h-4 paused">
+                <div class="eq-bar rounded-full"></div>
+                <div class="eq-bar rounded-full"></div>
+                <div class="eq-bar rounded-full"></div>
+                <div class="eq-bar rounded-full"></div>
+            </div>
+            <i id="musicIcon" class="fa-solid fa-music text-neonRose text-sm"></i>
+        </button>
+    </div>
+
+    <!-- MAIN CONTAINER WITH MOBILE PADDING -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20 space-y-12 sm:space-y-16">
+
+        <!-- 1. HEADER & GIFT INTRO BANNER -->
+        <header class="text-center space-y-4 sm:space-y-6 pt-6 sm:pt-10">
+            <!-- Midnight Gift Tag Badge -->
+            <div class="inline-flex items-center space-x-2 glass-pill px-4 py-2 rounded-full text-neonRose font-medium text-xs sm:text-sm border border-neonRose/30 shadow-lg max-w-[90vw]">
+                <i class="fa-solid fa-gift text-warmGold text-sm shrink-0 animate-bounce"></i>
+                <span class="truncate">00:00 Midnight Gift for Pratik & Spriha — by <strong>Shreejit</strong></span>
+            </div>
+
+            <h1 class="font-greatVibes fluid-title text-transparent bg-clip-text bg-gradient-to-r from-neonRose via-softPink to-glowViolet drop-shadow-[0_0_20px_rgba(255,77,141,0.4)] tracking-wide px-2">
+                Pratik <span class="font-dancing text-warmGold text-[0.8em]">&</span> Spriha
+            </h1>
+
+            <p class="font-dancing fluid-subtitle text-gray-300 max-w-2xl mx-auto leading-relaxed px-4">
+                "5 Months of Unstoppable Bonds, Endless Texts & Everlasting Love"
+            </p>
+
+            <div class="flex justify-center items-center space-x-3 text-neonRose">
+                <span class="h-0.5 w-10 sm:w-16 bg-gradient-to-r from-transparent to-neonRose"></span>
+                <i class="fa-solid fa-heart text-lg sm:text-xl heart-beat"></i>
+                <span class="h-0.5 w-10 sm:w-16 bg-gradient-to-l from-transparent to-neonRose"></span>
+            </div>
+        </header>
+
+        <!-- 2. ANNIVERSARY COUNTDOWN TIMER -->
+        <section class="glass-card rounded-3xl p-5 sm:p-8 text-center relative overflow-hidden border border-white/10 shadow-2xl">
+            <div class="absolute -top-16 -left-16 w-40 h-40 bg-neonRose/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-16 -right-16 w-40 h-40 bg-glowViolet/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-6">
+                <div>
+                    <span class="text-[10px] sm:text-xs font-bold tracking-widest text-neonRose uppercase bg-neonRose/10 border border-neonRose/20 px-3 py-1 rounded-full">Time Together</span>
+                    <h2 class="text-xl sm:text-3xl font-bold text-white mt-2.5">5 Months Milestone</h2>
+                    <p class="text-xs text-gray-400 mt-1">Since May 25, 2026</p>
+                </div>
+
+                <!-- Responsive Timer Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-4 max-w-3xl mx-auto">
+                    <div class="glass-pill p-3 sm:p-4 rounded-2xl flex flex-col justify-center items-center border border-white/5 min-h-[75px]">
+                        <span id="months" class="text-2xl sm:text-4xl font-extrabold text-neonRose">5</span>
+                        <span class="text-[10px] sm:text-xs font-semibold text-gray-400 uppercase mt-0.5">Months</span>
+                    </div>
+                    <div class="glass-pill p-3 sm:p-4 rounded-2xl flex flex-col justify-center items-center border border-white/5 min-h-[75px]">
+                        <span id="days" class="text-2xl sm:text-4xl font-extrabold text-neonRose">0</span>
+                        <span class="text-[10px] sm:text-xs font-semibold text-gray-400 uppercase mt-0.5">Days</span>
+                    </div>
+                    <div class="glass-pill p-3 sm:p-4 rounded-2xl flex flex-col justify-center items-center border border-white/5 min-h-[75px]">
+                        <span id="hours" class="text-2xl sm:text-4xl font-extrabold text-neonRose">0</span>
+                        <span class="text-[10px] sm:text-xs font-semibold text-gray-400 uppercase mt-0.5">Hours</span>
+                    </div>
+                    <div class="glass-pill p-3 sm:p-4 rounded-2xl flex flex-col justify-center items-center border border-white/5 min-h-[75px]">
+                        <span id="minutes" class="text-2xl sm:text-4xl font-extrabold text-neonRose">0</span>
+                        <span class="text-[10px] sm:text-xs font-semibold text-gray-400 uppercase mt-0.5">Minutes</span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1 glass-pill p-3 sm:p-4 rounded-2xl flex flex-col justify-center items-center border border-white/5 min-h-[75px]">
+                        <span id="seconds" class="text-2xl sm:text-4xl font-extrabold text-neonRose">0</span>
+                        <span class="text-[10px] sm:text-xs font-semibold text-gray-400 uppercase mt-0.5">Seconds</span>
+                    </div>
+                </div>
+
+                <!-- Celebration Trigger Button -->
+                <div class="pt-2">
+                    <button onclick="triggerConfetti()" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 bg-gradient-to-r from-neonRose to-glowViolet hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-6 py-3.5 rounded-full shadow-lg transition-all duration-300 active:scale-95 min-h-[48px]">
+                        <i class="fa-solid fa-cake-candles text-warmGold text-base"></i>
+                        <span class="text-sm">Pop 00:00 Anniversary Confetti! 🎉</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. DUAL ENVELOPES SECTION ("Letters from Shreejit") -->
+        <section class="space-y-6 sm:space-y-8">
+            <div class="text-center space-y-1.5">
+                <span class="text-[10px] sm:text-xs font-bold tracking-widest text-neonRose uppercase bg-neonRose/10 border border-neonRose/20 px-3 py-1 rounded-full">Personal Messages</span>
+                <h2 class="text-2xl sm:text-4xl font-bold font-dancing text-white">Letters From Shreejit ✉️</h2>
+                <p class="text-gray-400 text-xs sm:text-sm max-w-md mx-auto">Tap each envelope to break the seal and open your midnight message!</p>
+            </div>
+
+            <!-- Two Envelopes Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 max-w-4xl mx-auto">
+                
+                <!-- ENVELOPE 1: PRATIK -->
+                <div onclick="openLetter('pratik')" class="envelope-wrapper glass-card-glow rounded-2xl sm:rounded-3xl p-6 cursor-pointer relative overflow-hidden text-center group border border-neonRose/40 active:border-neonRose">
+                    <div class="absolute top-3 right-3 bg-amber-500/20 text-warmGold border border-amber-500/30 text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        Best Friend • 13+ Yrs
+                    </div>
+
+                    <div class="my-4 sm:my-6 flex flex-col items-center justify-center space-y-3">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-rose-950 to-pink-900 border-2 border-neonRose flex items-center justify-center shadow-[0_0_20px_rgba(255,77,141,0.3)]">
+                            <i class="fa-solid fa-envelope-open-text text-neonRose text-2xl sm:text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-dancing text-2xl sm:text-3xl font-bold text-white">For Pratik</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">Message from Shreejit</p>
+                        </div>
+                    </div>
+
+                    <div class="inline-flex items-center space-x-2 text-xs font-semibold text-neonRose bg-neonRose/10 px-4 py-2 rounded-full border border-neonRose/20 min-h-[38px]">
+                        <span>Tap to Open Letter</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </div>
+                </div>
+
+                <!-- ENVELOPE 2: SPRIHA -->
+                <div onclick="openLetter('spriha')" class="envelope-wrapper glass-card-glow rounded-2xl sm:rounded-3xl p-6 cursor-pointer relative overflow-hidden text-center group border border-purple-500/40 active:border-glowViolet">
+                    <div class="absolute top-3 right-3 bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        Like A Sister 🌸
+                    </div>
+
+                    <div class="my-4 sm:my-6 flex flex-col items-center justify-center space-y-3">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-purple-950 to-indigo-900 border-2 border-glowViolet flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                            <i class="fa-solid fa-envelope-open-text text-glowViolet text-2xl sm:text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-dancing text-2xl sm:text-3xl font-bold text-white">For Spriha</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">Message from Shreejit</p>
+                        </div>
+                    </div>
+
+                    <div class="inline-flex items-center space-x-2 text-xs font-semibold text-glowViolet bg-glowViolet/10 px-4 py-2 rounded-full border border-glowViolet/20 min-h-[38px]">
+                        <span>Tap to Open Letter</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4. LOVE EQUATION (PRATIK + SPRIHA = DUO) WITH LOCALSTORAGE & UPLOAD -->
+        <section class="space-y-6 sm:space-y-8">
+            <div class="text-center space-y-1.5">
+                <span class="text-[10px] sm:text-xs font-bold tracking-widest text-neonRose uppercase bg-neonRose/10 border border-neonRose/20 px-3 py-1 rounded-full">The Duo</span>
+                <h2 class="text-2xl sm:text-4xl font-bold font-dancing text-white">Pratik + Spriha = Pure Magic ✨</h2>
+                <p class="text-gray-400 text-xs sm:text-sm max-w-md mx-auto">Upload or change your device photos instantly below!</p>
+            </div>
+
+            <!-- Mobile Stack / Desktop Row Equation -->
+            <div class="flex flex-col lg:flex-row items-center justify-center gap-3 sm:gap-4 max-w-4xl mx-auto">
+                
+                <!-- Pratik Photo Card -->
+                <div class="relative w-full lg:w-1/3 max-w-xs">
+                    <div class="glass-card rounded-2xl p-3.5 border border-white/10 text-center space-y-2.5 shadow-xl">
+                        <div class="h-56 sm:h-64 rounded-xl overflow-hidden relative bg-gray-900 border border-white/10">
+                            <img id="pratikImg" src="pratik.jpg" alt="Pratik" class="w-full h-full object-cover">
+                            <label for="uploadPratik" class="absolute inset-0 bg-black/60 text-white flex flex-col items-center justify-center opacity-85 sm:opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+                                <i class="fa-solid fa-upload text-xl mb-1 text-neonRose"></i>
+                                <span class="text-[11px] font-semibold">Upload from Device</span>
+                            </label>
+                            <input type="file" id="uploadPratik" accept="image/*" class="hidden" onchange="updatePhoto(event, 'pratikImg', 'pratik_photo')">
+                        </div>
+                        <div>
+                            <h3 class="font-dancing text-xl sm:text-2xl font-bold text-white">Pratik</h3>
+                            <p class="text-[11px] text-neonRose font-medium">Nursery Best Friend</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLUS Symbol -->
+                <div class="text-2xl font-black text-neonRose font-dancing my-0.5 lg:my-0 flex items-center justify-center w-9 h-9 bg-darkCard rounded-full border border-neonRose/40 shadow-lg shrink-0">
+                    +
+                </div>
+
+                <!-- Spriha Photo Card -->
+                <div class="relative w-full lg:w-1/3 max-w-xs">
+                    <div class="glass-card rounded-2xl p-3.5 border border-white/10 text-center space-y-2.5 shadow-xl">
+                        <div class="h-56 sm:h-64 rounded-xl overflow-hidden relative bg-gray-900 border border-white/10">
+                            <img id="sprihaImg" src="spriha2.jpg" alt="Spriha" class="w-full h-full object-cover">
+                            <label for="uploadSpriha" class="absolute inset-0 bg-black/60 text-white flex flex-col items-center justify-center opacity-85 sm:opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+                                <i class="fa-solid fa-upload text-xl mb-1 text-glowViolet"></i>
+                                <span class="text-[11px] font-semibold">Upload from Device</span>
+                            </label>
+                            <input type="file" id="uploadSpriha" accept="image/*" class="hidden" onchange="updatePhoto(event, 'sprihaImg', 'spriha_photo')">
+                        </div>
+                        <div>
+                            <h3 class="font-dancing text-xl sm:text-2xl font-bold text-white">Spriha</h3>
+                            <p class="text-[11px] text-glowViolet font-medium">Like A Sister</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EQUALS Symbol -->
+                <div class="text-2xl font-black text-neonRose font-dancing my-0.5 lg:my-0 flex items-center justify-center w-9 h-9 bg-darkCard rounded-full border border-neonRose/40 shadow-lg shrink-0">
+                    =
+                </div>
+
+                <!-- Duo Photo Card -->
+                <div class="relative w-full lg:w-1/3 max-w-xs">
+                    <div class="glass-card-glow rounded-2xl p-3.5 border border-neonRose/50 text-center space-y-2.5 shadow-2xl">
+                        <div class="h-56 sm:h-64 rounded-xl overflow-hidden relative bg-gray-900 border border-neonRose/30">
+                            <img id="duoImg" src="both.jpg" alt="Pratik & Spriha" class="w-full h-full object-cover">
+                            <label for="uploadDuo" class="absolute inset-0 bg-black/60 text-white flex flex-col items-center justify-center opacity-85 sm:opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+                                <i class="fa-solid fa-upload text-xl mb-1 text-warmGold"></i>
+                                <span class="text-[11px] font-semibold">Upload Duo Photo</span>
+                            </label>
+                            <input type="file" id="uploadDuo" accept="image/*" class="hidden" onchange="updatePhoto(event, 'duoImg', 'duo_photo')">
+                        </div>
+                        <div>
+                            <h3 class="font-dancing text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neonRose to-warmGold">Together Forever 💖</h3>
+                            <p class="text-[11px] text-gray-400 font-medium">5 Months & Counting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. "ENDLESS TEXTS" HIGHLIGHT -->
+        <section class="glass-card rounded-3xl p-5 sm:p-8 border border-white/10 shadow-2xl space-y-5">
+            <div class="text-center space-y-1.5">
+                <span class="text-[10px] sm:text-xs font-bold tracking-widest text-glowViolet uppercase bg-glowViolet/10 border border-glowViolet/20 px-3 py-1 rounded-full">Your Unique Vibe</span>
+                <h2 class="text-2xl sm:text-4xl font-bold font-dancing text-white">Endless Texts, Infinite Love 💬</h2>
+                <p class="text-gray-400 text-xs sm:text-sm max-w-lg mx-auto">No dates needed, no long walks needed—just endless texts that built an unbreakable bond!</p>
+            </div>
+
+            <!-- Responsive Chat Interface Card -->
+            <div class="max-w-md mx-auto bg-slate-900/90 rounded-2xl p-4 border border-white/10 shadow-inner space-y-3 font-quicksand text-xs sm:text-sm">
+                <!-- Chat Header -->
+                <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></div>
+                        <span class="font-bold text-white text-xs">Pratik & Spriha • Non-stop Chatting</span>
+                    </div>
+                    <span class="text-[9px] text-gray-500 font-mono">00:00 HRS</span>
+                </div>
+
+                <!-- Chat Bubble 1 (Left) -->
+                <div class="flex items-start space-x-2">
+                    <div class="w-6 h-6 rounded-full bg-neonRose/20 text-neonRose text-[10px] flex items-center justify-center font-bold shrink-0">P</div>
+                    <div class="bg-gray-800 text-gray-200 p-2.5 rounded-2xl rounded-tl-none max-w-[85%] border border-white/5 text-xs">
+                        Late night texts again?
+                    </div>
+                </div>
+
+                <!-- Chat Bubble 2 (Right) -->
+                <div class="flex items-start justify-end space-x-2">
+                    <div class="bg-gradient-to-r from-neonRose to-pink-600 text-white p-2.5 rounded-2xl rounded-tr-none max-w-[85%] shadow-md text-xs">
+                        Always! Talking to you never gets boring. ✨
+                    </div>
+                    <div class="w-6 h-6 rounded-full bg-glowViolet/20 text-glowViolet text-[10px] flex items-center justify-center font-bold shrink-0">S</div>
+                </div>
+
+                <!-- Chat Bubble 3 (Left) -->
+                <div class="flex items-start space-x-2">
+                    <div class="w-6 h-6 rounded-full bg-neonRose/20 text-neonRose text-[10px] flex items-center justify-center font-bold shrink-0">P</div>
+                    <div class="bg-gray-800 text-gray-200 p-2.5 rounded-2xl rounded-tl-none max-w-[85%] border border-white/5 text-xs">
+                        5 months felt like 5 seconds with you! 💖
+                    </div>
+                </div>
+
+                <!-- Banner Inside Chat -->
+                <div class="text-center py-2 bg-white/5 rounded-xl border border-white/5 text-[11px] text-warmGold font-medium">
+                    <i class="fa-solid fa-heart mr-1 text-neonRose"></i> Built on endless texts, genuine laughs & deep care.
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. REASONS WHY SHREEJIT LOVES YOU TWO AS A COUPLE -->
+        <section class="space-y-6 sm:space-y-8">
+            <div class="text-center space-y-1.5">
+                <span class="text-[10px] sm:text-xs font-bold tracking-widest text-neonRose uppercase bg-neonRose/10 border border-neonRose/20 px-3 py-1 rounded-full">Interactive Reasons</span>
+                <h2 class="text-2xl sm:text-4xl font-bold font-dancing text-white">Why You Two Are Perfect Together</h2>
+                <p class="text-gray-400 text-xs sm:text-sm">Tap any card to flip!</p>
+            </div>
+
+            <!-- Responsive Flip Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                <!-- Card 1 -->
+                <div class="flip-card h-44 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card flex flex-col items-center justify-center p-4 border border-white/10 hover:border-neonRose/40">
+                            <i class="fa-solid fa-sun text-2xl sm:text-3xl text-warmGold mb-2"></i>
+                            <h4 class="font-bold text-white text-sm">Reason #1</h4>
+                            <p class="text-[10px] text-gray-400 mt-1">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-900 to-pink-950 text-white p-4 flex flex-col items-center justify-center shadow-2xl border border-neonRose/50">
+                            <p class="font-dancing text-xl text-warmGold leading-snug">"Seeing you guys together makes my day so much better! ✨"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card h-44 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card flex flex-col items-center justify-center p-4 border border-white/10 hover:border-neonRose/40">
+                            <i class="fa-solid fa-comments text-2xl sm:text-3xl text-neonRose mb-2"></i>
+                            <h4 class="font-bold text-white text-sm">Reason #2</h4>
+                            <p class="text-[10px] text-gray-400 mt-1">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-purple-900 to-indigo-950 text-white p-4 flex flex-col items-center justify-center shadow-2xl border border-glowViolet/50">
+                            <p class="font-dancing text-xl text-pink-300 leading-snug">"Endless texting soulmates who never run out of things to say."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card h-44 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card flex flex-col items-center justify-center p-4 border border-white/10 hover:border-neonRose/40">
+                            <i class="fa-solid fa-wand-magic-sparkles text-2xl sm:text-3xl text-glowViolet mb-2"></i>
+                            <h4 class="font-bold text-white text-sm">Reason #3</h4>
+                            <p class="text-[10px] text-gray-400 mt-1">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-900 to-purple-950 text-white p-4 flex flex-col items-center justify-center shadow-2xl border border-neonRose/50">
+                            <p class="font-dancing text-xl text-warmGold leading-snug">"Pure, effortless & genuine chemistry."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flip-card h-44 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card flex flex-col items-center justify-center p-4 border border-white/10 hover:border-neonRose/40">
+                            <i class="fa-solid fa-crown text-2xl sm:text-3xl text-warmGold mb-2"></i>
+                            <h4 class="font-bold text-white text-sm">Reason #4</h4>
+                            <p class="text-[10px] text-gray-400 mt-1">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-indigo-900 to-slate-950 text-white p-4 flex flex-col items-center justify-center shadow-2xl border border-white/20">
+                            <p class="font-dancing text-xl text-pink-300 leading-snug">"Simply the sweetest, best duo in the whole world."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="flip-card h-44 cursor-pointer sm:col-span-2 lg:col-span-1" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card flex flex-col items-center justify-center p-4 border border-white/10 hover:border-neonRose/40">
+                            <i class="fa-solid fa-ring text-2xl sm:text-3xl text-neonRose mb-2"></i>
+                            <h4 class="font-bold text-white text-sm">Reason #5</h4>
+                            <p class="text-[10px] text-gray-400 mt-1">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-900 to-pink-900 text-white p-4 flex flex-col items-center justify-center shadow-2xl border border-neonRose/60">
+                            <p class="font-dancing text-xl text-warmGold leading-snug">"Destined to walk the aisle together and get married! 💍"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Virtual Celebration Button -->
+            <div class="pt-4 text-center">
+                <button onclick="sendVirtualLove()" class="w-full sm:w-auto inline-flex items-center justify-center glass-card-glow border border-neonRose/50 hover:border-neonRose px-6 py-3.5 rounded-full text-white font-bold text-sm sm:text-base shadow-2xl transition-all duration-300 active:scale-95 space-x-2.5 min-h-[48px]">
+                    <i class="fa-solid fa-heart text-neonRose"></i>
+                    <span>Send Celebratory Wishes & Hearts! 🎉</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 5. THEIR STORY: A TOP-TO-BOTTOM ROADMAP -->
+        <section class="space-y-6 sm:space-y-8" aria-labelledby="storyRoadTitle">
+            <div class="text-center space-y-2">
+                <span class="text-[10px] sm:text-xs font-bold tracking-widest text-neonRose uppercase bg-neonRose/10 border border-neonRose/20 px-3 py-1 rounded-full">Their Journey</span>
+                <h2 id="storyRoadTitle" class="text-3xl sm:text-5xl font-bold font-dancing text-white">How Their Story Unfolded 💗</h2>
+                <p class="text-gray-400 text-xs sm:text-sm max-w-lg mx-auto">Eight moments, one little road from the beginning to the present.</p>
+            </div>
+            <div class="story-road">
+                <article class="story-stop"><div class="story-card"><img src="1.png" alt="Their story, moment one" loading="lazy"><div class="story-caption"><span class="story-number">1</span><h3 class="font-dancing text-2xl font-bold text-white">This is where it started</h3></div></div></article>
+                <article class="story-stop"><div class="story-card"><img src="2.png" alt="Their story, moment two" loading="lazy"><div class="story-caption"><span class="story-number">2</span><h3 class="font-dancing text-2xl font-bold text-white">Something changed…</h3></div></div></article>
+                <article class="story-stop"><div class="story-card"><img src="3.png" alt="Their story, moment three" loading="lazy"><div class="story-caption"><span class="story-number">3</span><h3 class="font-dancing text-2xl font-bold text-white">Moving to Discord 💬</h3></div></div></article>
+                <article class="story-stop"><div class="story-card"><img src="4.png" alt="Their story, moment four" loading="lazy"><div class="story-caption"><span class="story-number">4</span><h3 class="font-dancing text-2xl font-bold text-white">A new chapter on Discord</h3></div></div></article>
+                <article class="story-stop"><div class="story-card"><img src="5.jpg" alt="Their story, moment five" loading="lazy"><div class="story-caption"><span class="story-number">5</span><h3 class="font-dancing text-2xl font-bold text-white">Together in classes 📚</h3></div></div></article>
+                <article class="story-stop"><div class="story-card"><img src="6.jpg" alt="Their story, moment six" loading="lazy"><div class="story-caption"><span class="story-number">6</span><h3 class="font-dancing text-2xl font-bold text-white">A call?? 👀</h3></div></div></article>
+                <article class="story-stop"><div class="story-card"><img src="7.jpg" alt="Their story, moment seven" loading="lazy"><div class="story-caption"><span class="story-number">7</span><h3 class="font-dancing text-2xl font-bold text-white">The present ✨</h3></div></div></article>
+                <article class="story-stop"><div class="story-card"><img src="8.jpg" alt="Their story, moment eight" loading="lazy"><div class="story-caption"><span class="story-number">8</span><h3 class="font-dancing text-2xl font-bold text-white">Lovers ❤️</h3></div></div></article>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center pt-8 text-gray-500 text-xs space-y-2 border-t border-white/10">
+            <p>Made with ❤️ by <strong>Shreejit</strong> for Pratik & Spriha • Forever & Always</p>
+            <p class="font-dancing text-lg sm:text-xl text-neonRose">Happy 5-Month Anniversary! 🎉</p>
+        </footer>
+
+    </main>
+
+    <!-- LETTER POPUP MODAL (PRATIK) -->
+    <div id="pratikModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="glass-card-glow rounded-2xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-7 border border-neonRose/40 relative shadow-2xl space-y-4">
+            <button onclick="closeLetter('pratik')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl p-2 min-h-[44px] min-w-[44px] flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="flex items-center space-x-3 border-b border-white/10 pb-3 pr-8">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-500/20 border border-amber-500/40 text-warmGold flex items-center justify-center font-bold shrink-0">
+                    <i class="fa-solid fa-crown text-sm"></i>
+                </div>
+                <div>
+                    <h3 class="font-dancing text-2xl font-bold text-white">To My Best Friend, Pratik</h3>
+                    <p class="text-[10px] sm:text-[11px] text-amber-400 font-medium">13+ Years Friendship Since Nursery • From Shreejit</p>
+                </div>
+            </div>
+
+            <div class="font-quicksand text-gray-200 text-xs sm:text-sm leading-relaxed space-y-3 max-h-[55vh] overflow-y-auto pr-2">
+                <p>Bro,</p>
+                <p>
+                    It honestly blows my mind when I think back! From sitting in grade nursery together to now—it has been over <strong>13+ years of our friendship</strong>, and you have always been my best friend through every step of life.
+                </p>
+                <p>
+                    Huge congratulations on completing 5 wonderful months with Spriha! I wish you both a very happy relationship... <em>cus let's be honest, I'm not gonna be able to find one anytime soon! 😂</em>
+                </p>
+                <p>
+                    Seeing u gyz together makes my day better. I am genuinely so happy for you. I hope with all my heart that you two end up getting married and share an entire lifetime of happiness together!
+                </p>
+                <p class="font-dancing text-lg sm:text-xl text-neonRose font-bold pt-1">
+                    Your bestfriend<br> Shreejit ❤️
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LETTER POPUP MODAL (SPRIHA) -->
+    <div id="sprihaModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="glass-card-glow rounded-2xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-7 border border-purple-500/40 relative shadow-2xl space-y-4">
+            <button onclick="closeLetter('spriha')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl p-2 min-h-[44px] min-w-[44px] flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="flex items-center space-x-3 border-b border-white/10 pb-3 pr-8">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 flex items-center justify-center font-bold shrink-0">
+                    <i class="fa-solid fa-sparkles text-sm"></i>
+                </div>
+                <div>
+                    <h3 class="font-dancing text-2xl font-bold text-white">To Dear Spriha</h3>
+                    <p class="text-[10px] sm:text-[11px] text-purple-300 font-medium">Like A Younger Sister • From Shreejit</p>
+                </div>
+            </div>
+
+            <div class="font-quicksand text-gray-200 text-xs sm:text-sm leading-relaxed space-y-3 max-h-[55vh] overflow-y-auto pr-2">
+                <p>Hey Spriha,</p>
+                <p>
+                    Even though our friendship hasn't been as long as nursery grade, you have truly become like a <strong>younger sister</strong> to me. You are also my <strong>best female friend</strong>, and I genuinely value the friendship we have.
+                </p>
+                <p>
+                    I want you to know that <strong>I would never want to stop being friends with you!</strong> You bring so much light and positivity everywhere you go.
+                </p>
+                <p>
+                    I am super happy for you and Pratik. Seeing you two together genuinely makes my day so much better! I hope you guys end up getting married, enjoy every second of your life together, and stay blessed forever! I wish you both a very happy relationship... cus let's be honest, I'm not gonna be able to find one anytime soon! 😂 ✨
+                </p>
+                <p class="font-dancing text-lg sm:text-xl text-glowViolet font-bold pt-1">
+                    Your CF,<br>Shreejit ❤️
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT LOGIC -->
+    <script>
+        // --- 1. RETINA-DPI FLOATING DARK CANVAS ---
+        const canvas = document.getElementById('heartsCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let dpr = window.devicePixelRatio || 1;
+
+        function resizeCanvas() {
+            dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class DarkParticle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * window.innerWidth;
+                this.y = window.innerHeight + Math.random() * 20;
+                this.size = Math.random() * 10 + 5;
+                this.speed = Math.random() * 0.9 + 0.3;
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.swing = Math.random() * 0.04;
+                this.swingAngle = Math.random() * Math.PI * 2;
+                this.isStar = Math.random() > 0.6;
+                this.color = ['#FF4D8D', '#8B5CF6', '#FFD166', '#F472B6', '#38bdf8'][Math.floor(Math.random() * 5)];
+            }
+
+            update() {
+                this.y -= this.speed;
+                this.swingAngle += this.swing;
+                this.x += Math.sin(this.swingAngle) * 0.4;
+
+                if (this.y < -20) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                
+                if (this.isStar) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size / 4, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.beginPath();
+                    const topCurveHeight = this.size * 0.3;
+                    ctx.moveTo(this.x, this.y + topCurveHeight);
+                    ctx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
+                    ctx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + this.size, this.x, this.y + this.size);
+                    ctx.bezierCurveTo(this.x, this.y + this.size, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
+                    ctx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        const particleCount = window.innerWidth < 640 ? 22 : 35;
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new DarkParticle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+
+        // --- 2. COUNTDOWN TIMER (FROM MAY 25, 2026) ---
+        const startDate = new Date('2026-05-25T00:00:00');
+
+        function updateCounter() {
+            const now = new Date();
+            let diff = now - startDate;
+
+            if (diff < 0) diff = 0;
+
+            const seconds = Math.floor((diff / 1000) % 60);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            const months = 5;
+            const remainingDays = totalDays > 153 ? totalDays - 153 : 0; 
+
+            document.getElementById('months').innerText = months;
+            document.getElementById('days').innerText = remainingDays;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+
+        // --- 3. LETTER POPUP MODALS ---
+        function openLetter(person) {
+            playKissSound();
+            if (person === 'pratik') {
+                document.getElementById('pratikModal').classList.add('modal-active');
+            } else if (person === 'spriha') {
+                document.getElementById('sprihaModal').classList.add('modal-active');
+            }
+        }
+
+        function closeLetter(person) {
+            if (person === 'pratik') {
+                document.getElementById('pratikModal').classList.remove('modal-active');
+            } else if (person === 'spriha') {
+                document.getElementById('sprihaModal').classList.remove('modal-active');
+            }
+        }
+
+
+        // --- 4. PHOTO UPLOADS WITH LOCALSTORAGE ---
+        function updatePhoto(event, elementId, storageKey) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    document.getElementById(elementId).src = dataUrl;
+                    try {
+                        localStorage.setItem(storageKey, dataUrl);
+                    } catch(err) {
+                        console.log("Storage space full", err);
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function loadSavedPhotos() {
+            ['pratik_photo', 'spriha_photo', 'duo_photo'].forEach(key => {
+                const saved = localStorage.getItem(key);
+                if (saved) {
+                    if (key === 'pratik_photo') document.getElementById('pratikImg').src = saved;
+                    if (key === 'spriha_photo') document.getElementById('sprihaImg').src = saved;
+                    if (key === 'duo_photo') document.getElementById('duoImg').src = saved;
+                }
+            });
+        }
+        try { loadSavedPhotos(); } catch (err) { console.log("Saved photos unavailable in this browser session.", err); }
+// --- 5. CONFETTI & LOVE CELEBRATION ---
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 90,
+                    spread: 70,
+                    origin: { y: 0.65 },
+                    colors: ['#FF4D8D', '#8B5CF6', '#FFD166', '#F472B6']
+                });
+            }
+        }
+
+        function sendVirtualLove() {
+            triggerConfetti();
+            playKissSound();
+
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    let p = new DarkParticle();
+                    p.y = window.innerHeight / 2 + (Math.random() * 80 - 40);
+                    p.x = window.innerWidth / 2 + (Math.random() * 160 - 80);
+                    p.size = Math.random() * 16 + 10;
+                    p.speed = Math.random() * 2.5 + 1.5;
+                    particles.push(p);
+                }, i * 50);
+            }
+        }
+
+
+        // --- 6. WEB AUDIO SYNTHESIZER ---
+        let audioCtx = null;
+        let isPlaying = false;
+        let timeoutIds = [];
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playNote(freq, duration, delay = 0, type = 'sine', vol = 0.12) {
+            let timer = setTimeout(() => {
+                if (!isPlaying || !audioCtx) return;
+                try {
+                    let osc = audioCtx.createOscillator();
+                    let gain = audioCtx.createGain();
+
+                    osc.type = type;
+                    osc.frequency.value = freq;
+
+                    gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + duration);
+                } catch(e) {}
+            }, delay);
+            timeoutIds.push(timer);
+        }
+
+        const lullabyNotes = [
+            { f: 220.00, d: 2.5 },
+            { f: 277.18, d: 2.5 },
+            { f: 329.63, d: 2.5 },
+            { f: 440.00, d: 3.0 },
+            { f: 392.00, d: 2.5 },
+            { f: 329.63, d: 2.5 },
+            { f: 293.66, d: 3.5 },
+        ];
+
+        function startMelodyLoop() {
+            if (!isPlaying) return;
+            let timeOffset = 0;
+            lullabyNotes.forEach((note) => {
+                playNote(note.f, note.d, timeOffset);
+                timeOffset += note.d * 600;
+            });
+
+            let loopTimer = setTimeout(() => {
+                if (isPlaying) startMelodyLoop();
+            }, timeOffset);
+            timeoutIds.push(loopTimer);
+        }
+
+        function toggleMusic() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const eq = document.getElementById('eqIcon');
+            const icon = document.getElementById('musicIcon');
+
+            if (isPlaying) {
+                isPlaying = false;
+                timeoutIds.forEach(id => clearTimeout(id));
+                timeoutIds = [];
+                eq.classList.add('paused');
+                icon.className = "fa-solid fa-music text-neonRose text-sm";
+            } else {
+                isPlaying = true;
+                eq.classList.remove('paused');
+                icon.className = "fa-solid fa-volume-high text-neonRose text-sm";
+                startMelodyLoop();
+            }
+        }
+
+        function playKissSound() {
+            initAudio();
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            if (!audioCtx) return;
+
+            try {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.12);
+
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } catch(e) {}
+        }
+    </script>
+
+    <!-- SIX-MONTH SURPRISE TEASER -->
+    <section class="text-center px-5 py-12 sm:py-16" aria-label="A little surprise coming soon">
+        <div class="max-w-2xl mx-auto glass-card rounded-3xl border border-neonRose/30 p-7 sm:p-10 shadow-2xl">
+            <div class="text-4xl mb-3" aria-hidden="true">👀💗✨</div>
+            <h2 class="font-dancing text-3xl sm:text-5xl font-bold text-white">Psst… something is cooking!</h2>
+            <p class="mt-3 text-neonRose text-lg sm:text-xl font-semibold">The 6-month surprise is on its way… 🎁</p>
+            <p class="mt-2 text-gray-400 text-sm">Stay tuned, Pratik &amp; Spriha. ♡</p>
+        </div>
+    </section>
+
+</body>
+</html>
